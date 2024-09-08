@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '../../Components/Atoms/InputItem/Input';
 import { useForm } from '../../hooks/useForm';
 import { modalError } from '../../utilities/modals';
@@ -8,52 +8,54 @@ import { useStore } from '../../hooks/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../pages/pagesStyle.scss';
 
-export const NewProduct = () => {
+export const EditProduct = () => {
 
+  const productEdit= JSON.parse(localStorage.getItem('productEdit'));
+  
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: 0,
+    name: productEdit?.title,
+    description: productEdit?.description,
+    price: productEdit?.price,
    })
-   
-  const [image, setImage] = useState();
+   const [image, setImage] = useState(productEdit?.image);
+
 
   const updateImage = (image) => {
     setImage(image);
 
   };
-  const { startAddingNewProduct } = useStore()
+
+
+  const { startEditingNewProduct} = useStore()
 
   const nameForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
   const descriptionForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
 
   const formValidations = {
-    name: [(value) => value?.match(nameForm), 'Start with upercase letter and have more than one.'],
-    description: [(value) => value?.match(descriptionForm), 'Start with upercase letter and have more than one.'],
+    name: [(value) => value.match(nameForm), 'Start with upercase letter and have more than one.'],
+    description: [(value) => value.match(descriptionForm), 'Start with upercase letter and have more than one.'],
     price: [(value) => !isNaN(value) && Number(value) >= 90, 'Add a number bigger than 90'],
   }
-  
   const { name, description, price, onInputChange, nameValid, descriptionValid, priceValid } = useForm(formData, formValidations);
   
   const navigate = useNavigate()
-  
+
   const handleSubmit = (e) => {
-    const savedImage = localStorage.getItem('productImage');
+    
     e.preventDefault();
     if (nameValid === null && descriptionValid === null && priceValid === null) {
-
+     
       const newProductForm = {
         title: name,
         price: parseInt(price),
         description: description,        
-        image: '', 
+        image: productEdit?.image, 
         category: 'Electronic',
         
-      }
-      localStorage.setItem("productImage", image)  
-      
-      startAddingNewProduct(newProductForm, navigate)    
+      }         
+      startEditingNewProduct(id,newProductForm, navigate)      
  
     } else {
       modalError('You must complete the form. Add a word with  two or more letters that starts with upercase. Add a number equal or bigger than 90')
@@ -62,14 +64,15 @@ export const NewProduct = () => {
 
   return (
 
-    <form className='new-product-container' onSubmit={handleSubmit}>
+    <form className='new-product-container'style={{border:'1px solid #e02c1c'}} onSubmit={handleSubmit}>
       <div className='items-container'>
-        <h1 className='greeting-heading'>New Product</h1>
+        <h1 className='greeting-heading'>Edit Product</h1>
         <div style={{
           width: '100%', height: '30%', display: 'flex',
           flexDirection: 'column', justifyContent: 'center',
         }}>
-          <ProductImage image={image} />          
+          <ProductImage image={image} />
+         
           <GetImage image={image} updateImage={updateImage} />
         </div>
         <Input
@@ -80,6 +83,7 @@ export const NewProduct = () => {
           label={'Name'}
           error={''}
           name={'name'}
+          
         />
         <Input
           type={'text'}

@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalError } from "../utilities/modals";
 import { onLogin } from "../store/authSlice";
 import { onAddingNewProduct, onEditingNewProduct } from "../store/newProductSlice";
-import { createData, editData, readData} from "../utilities/providers";
-import { onGettingProducts } from "../store/productsSlice";
+import { createData, editData, readProducts, readUsers} from "../utilities/providers";
+import { onGettingProducts, onGettingUsers } from "../store/productsSlice";
 
 
 
@@ -11,7 +11,7 @@ export const useStore = () => {
 
     const { status} = useSelector((state) => state.auth);
     const { newProduct,newProductEdited } = useSelector((state) => state.newProduct);  
-    const { products } = useSelector((state) => state.products);  
+    const { products,users } = useSelector((state) => state.products);  
   
     const dispatch = useDispatch();
 
@@ -41,8 +41,15 @@ export const useStore = () => {
     
 
     const startGettingProducts = async () => {
-        const results = await readData()           
+        const results = await readProducts('')                  
         dispatch(onGettingProducts(results));
+        
+       
+    }
+    const startGettingUsers = async () => {
+        const results = await readUsers('')               
+        
+        dispatch(onGettingUsers(results));
        
     }
 
@@ -68,6 +75,7 @@ export const useStore = () => {
     return {
         //* Propierties
         status,
+        users,
         products,
         newProduct,
         newProductEdited,
@@ -77,6 +85,7 @@ export const useStore = () => {
         startLogout,
         startAddingNewProduct,
         startGettingProducts,
+        startGettingUsers,
         startEditingNewProduct
 
     };

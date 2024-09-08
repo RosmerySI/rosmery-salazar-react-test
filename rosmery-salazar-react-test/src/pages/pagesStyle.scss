@@ -1,4 +1,5 @@
 @import '../styles/variables';
+@import '../styles/mixins';
 
 .login-container{
     display: flex;
@@ -28,13 +29,13 @@ h1.greeting-heading{
     font-size: 3.5rem;
     color: #{$dark};
 }
-#button-container{
+.button-container{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 10%;
 }
-#login-button{
+.button{
     margin:auto;
     height: 100%;
     width: 70% ;
@@ -42,6 +43,35 @@ h1.greeting-heading{
     border-style: none;    
     background-color: #{$dark} ;
     color: #{$primary};    
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+
+    
+}
+.buttonBack{
+    margin:auto;
+    height: 100%;
+    width: 70% ;
+    border-radius: 5px;
+    border: 1px solid  #{$dark};    
+    background-color: #{$primary} ;
+    color: #{$dark};    
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 5px;
+    cursor: pointer;
+
+    
+}
+.button-active{
+    margin:auto;
+    height: 100%;
+    width: 70% ;
+    border-radius: 5px;    
+    border:1px solid #{$dark} ;   
+    background-color:white ;
+    color: #{$dark};    
     font-size: 25px;
     font-weight: bold;
 
@@ -55,7 +85,115 @@ h1.greeting-heading{
     justify-content: center;
     background-color:#{$primary} ;
     height: 80vh;
-    width: 60vw;
-    border-radius: 5%;   
+    width: 95vw;
+    border-radius: 5%;  
+    h1{
+      overflow: hidden;
+    }
+    
+  @include sm {
 
+    
+    width: 70%;
+    height: 90vh; 
+  }
+  @include md {
+    
+    width: 70%;
+    height: 90vh; 
+  }
+  @include lg {
+    
+    width: 70%;
+    height: 90vh;
+  }
+  @include xl {
+   
+    width: 70%;
+    height: 90vh;
+  } 
+
+}
+.produts-container{
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    border: 1px solid #{$dark}; 
+    border-radius: 10px;
+    padding: 20px 20px;
+    height:80vh;
+    width: 70%;
+    background-color: #{$primary};
+   
+    
+}
+
+
+.product-header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+   width: 100%;
+}
+
+
+  
+ 
+.search-container{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    
+    
+}
+.input{
+    border: 1px solid  #{$dark} ;
+    height: 50px;
+}
+.input :target{
+    border: 1px solid  #{$dark} ;
+}
+.page-numbers-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+   
+}
+
+.iconContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.details-container {
+    border: 5px solid #e02c1c;
+    width: 95vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-around;  
+    align-items: center;
+
+  @include sm {
+   
+    width: 70%;
+    height: 90vh; 
+  }
+  @include md {
+   
+    width: 70%;
+    height: 90vh; 
+  }
+  @include lg {
+   
+    width: 70%;
+    height: 90vh;
+  }
+  @include xl {
+   
+    width: 70%;
+    height: 90vh;
+  }
 }

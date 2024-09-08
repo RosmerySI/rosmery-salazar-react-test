@@ -1,14 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import './products.scss';
 
 export const TableHeader = () => {
+  const navigate = useNavigate()
   return (
     <div className='title-create-container'>
         <h1>Products</h1>
+        <button
+          style={{
+            height: '50px',
+            width: '100px',
+            border: '1px solid #e02c1c',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '18px'
+          }}
+          onClick={() => navigate('/users')}>
+          Users
+        </button>
         <div >
-          <Link to='/newproduct'>
+          <Link to='/products/create'>
             <Button
               sx={{
                 background: '#e02c1c',

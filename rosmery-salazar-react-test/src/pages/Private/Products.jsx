@@ -8,7 +8,7 @@ import { Columns } from '../../utilities/Columns'
 export const Products = () => {
 
   const { products, startGettingProducts } = useStore()
-  const columns = Columns();
+  const {columns} = Columns();
   useEffect(() => {
     startGettingProducts()
   }, []);
