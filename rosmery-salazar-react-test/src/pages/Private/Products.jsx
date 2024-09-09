@@ -8,17 +8,17 @@ import { Columns } from '../../utilities/Columns'
 export const Products = () => {
 
   const { products, startGettingProducts } = useStore()
-  const {columns} = Columns();
+  const { columns } = Columns();
   useEffect(() => {
     startGettingProducts()
   }, []);
-   
+
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  
+
   useEffect(() => {
-    if (Array.isArray(products)) {  
+    if (Array.isArray(products)) {
       const formattedData = products.map((product, index) => ({
         id: product.id || index,
         title: product.title,
@@ -28,7 +28,7 @@ export const Products = () => {
       }));
       setRows(formattedData);
     } else {
-      setRows([]); 
+      setRows([]);
     }
   }, [products]);
 
@@ -44,22 +44,19 @@ export const Products = () => {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
-  
+
   const pageSize = 5;
-  const paginatedRows = rows?.slice((page - 1) * pageSize, page * pageSize);  
-  
+  const paginatedRows = rows?.slice((page - 1) * pageSize, page * pageSize);
+
   return (
-    <>
+    <div className='products-container'>
       <TableHeader />
-      <Paper style={{ padding: '20px', margin: '20px auto', width: '80%' }}>
-
-        <TableSearch search={search} handleSearch={handleSearch} />
-        
+      <TableSearch search={search} handleSearch={handleSearch} />
+      <Paper style={{ padding: '20px', margin: '20px auto', width: '90%' }}>
         <DataTable paginatedRows={paginatedRows} columns={columns} pageSize={pageSize} />
-
         <TablePagination rows={rows} pageSize={pageSize} page={page} handlePageChange={handlePageChange} />
       </Paper>
-    </>
+    </div>
   );
 
 };

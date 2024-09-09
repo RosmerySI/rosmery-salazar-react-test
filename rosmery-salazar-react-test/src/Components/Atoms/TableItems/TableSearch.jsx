@@ -9,7 +9,7 @@ export const TableSearch = ({search,handleSearch}) => {
           fullWidth
           value={search}
           onChange={handleSearch}
-          style={{ marginBottom: '20px' }}         
+          style={{ marginBottom: '20px',width:'93%' }}         
           sx={{           
             '& .MuiOutlinedInput-root': {
               '& fieldset': {

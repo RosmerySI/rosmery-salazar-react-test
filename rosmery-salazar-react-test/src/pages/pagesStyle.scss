@@ -128,17 +128,41 @@ h1.greeting-heading{
   } 
 
 }
-.produts-container{
+.products-container{
     display: flex;
     flex-direction: column;  
     align-items: center;
-    border: 1px solid #{$dark}; 
-    border-radius: 10px;
+    justify-content: space-around;
+     
+    border-radius: 5%;
     padding: 20px 20px;
     height:80vh;
-    width: 70%;
+    width: 90%;
     background-color: #{$primary};
-   
+    @include sm {
+
+      height:80vh;
+    width: 90%;
+    }
+  
+    @include md {
+  
+      height:80vh;
+    width: 90%;
+    }
+  
+    @include lg {
+  
+      height:80vh;
+    width: 90%;
+    }
+  
+    @include xl {
+  
+      height:80vh;
+    width: 50%;
+    }
+  
     
 }
 

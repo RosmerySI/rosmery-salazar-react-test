@@ -15,9 +15,24 @@ export const Details = () => {
     const navigate= useNavigate()
 
     useEffect(() => {
-        const item = products?.find(item => item.id === productDetails.id);
-        setSelectedItem(item);
-    }, [products, productDetails.id]);
+      // Verificar si `productDetails` existe y tiene un id válido
+      if (!productDetails || !productDetails.id) {
+        console.error("No se encontraron detalles del producto en localStorage");
+        navigate('/products'); // Redirigir si no hay detalles del producto
+        return;
+      }
+  
+      // Verificar si `products` es un array válido antes de usar .find
+      if (Array.isArray(products)) {
+        const item = products.find((item) => item.id === productDetails.id);
+        setSelectedItem(item || null); // Si no se encuentra, `item` será null
+      }
+    }, [products, productDetails, navigate]);
+  
+    // Mostrar un mensaje si no se encuentra el producto
+    if (!selectedItem && products.length > 0) {
+      return <h2>Producto no encontrado</h2>;
+    }
 
     return (
         <>
