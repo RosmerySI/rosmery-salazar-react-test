@@ -14,6 +14,7 @@ export const DataTable = ({ paginatedRows=[], columns, pageSize }) => {
           pagination
           disableSelectionOnClick
           getRowId={(row) =>row.id }
+         
         />
    
     </div>

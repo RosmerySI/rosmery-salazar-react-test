@@ -38,10 +38,10 @@ export const createData = async (form) => {
     
     }
 };
-export const editData = async (id,form) => {  
-    
+export const editData = async (id,form,user) => {  
+    const url=user? `/api/users/${id}`:`/api/products/${id}`
     try {
-        const response = await axios.put(`/api/products/${id}`, form);
+        const response = await axios.put(url, form);
         console.log(response)
         
     } catch (error) {

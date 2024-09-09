@@ -4,29 +4,44 @@ import { useNavigate } from 'react-router-dom';
 import { DataTable } from '../../Components/Atoms/TableItems';
 import { Columns } from '../../utilities/Columns';
 import { Paper } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 export const Users = () => {
 
   const [usersTable ,setUsersTable]= useState([])
   const { users, startGettingUsers } = useStore()
-  const {columnsUsers} = Columns();
+ 
+ 
+  const {columnsUsers} = Columns(setUsersTable);
 
   useEffect(() => {
     startGettingUsers()
   }, []);
-
+ 
   useEffect(() => {
     if (users.length > 0) {
       setUsersTable(users);
       
     }
   }, [users]);
+
+  const handleCellEditCommit = (params) => {
+    
+    const updatedRows = usersTable.map((user) => {
+      if (user.id === params.id) {
+        return { ...user, [params.field]: params.value };
+      }
+     
+      return user;
+    });
+    setUsersTable(updatedRows);
+  };
    
   const navigate = useNavigate()
 
   return (
-    <div style={{width:'60%'}}>
-        <div className='title-create-container' style={{marginLeft:'8%'}}>
+    <div className='products-container' >
+        <div className='title-create-container' >
         <h1>Users</h1>
         <button
           style={{
@@ -41,8 +56,16 @@ export const Users = () => {
           Back
         </button>
         </div>
-        <Paper style={{ padding: '20px', margin: '20px auto', width: '80%' }}>
-        <DataTable paginatedRows={usersTable} columns={columnsUsers} />
+        <Paper style={{ padding: '20px', margin: '20px auto', width: '90%' }}>
+       
+        <DataGrid
+          rows={usersTable} 
+          columns={columnsUsers} 
+          pageSize={5} 
+          onCellEditCommit={handleCellEditCommit}
+        />
+      
+      
         </Paper>
     </div>
   );
