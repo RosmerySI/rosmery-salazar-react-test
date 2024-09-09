@@ -20,12 +20,13 @@ export const Users = () => {
       setUsersTable(users);
       
     }
-  }, [users]); 
+  }, [users]);
+   
   const navigate = useNavigate()
 
   return (
-    <>
-        <div className='title-create-container'>
+    <div style={{width:'60%'}}>
+        <div className='title-create-container' style={{marginLeft:'8%'}}>
         <h1>Users</h1>
         <button
           style={{
@@ -43,6 +44,6 @@ export const Users = () => {
         <Paper style={{ padding: '20px', margin: '20px auto', width: '80%' }}>
         <DataTable paginatedRows={usersTable} columns={columnsUsers} />
         </Paper>
-    </>
+    </div>
   );
 };

@@ -55,6 +55,7 @@ export const Login = () => {
                     id={'email'}
                     value={inputList.email.value}
                     onChange={(e) => UpdateValue(e, 'email', inputList, setInputList)}
+                    label={'Email:'}
                     error={errorList.email}
 
                 />
@@ -74,8 +75,8 @@ export const Login = () => {
                     label={'Confirm password:'}
                     error={errorList.confirmPassword}
                 />
-                <div id='button-container'>
-                    <button type='submit' id='login-button'> Log in </button>
+                <div className='button-container'>
+                    <button type='submit' className='button'> Log in </button>
                 </div>
             </div>
         </form>

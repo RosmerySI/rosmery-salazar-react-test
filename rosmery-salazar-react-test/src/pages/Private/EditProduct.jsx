@@ -9,26 +9,36 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../../pages/pagesStyle.scss';
 
 export const EditProduct = () => {
-
-  const productEdit= JSON.parse(localStorage.getItem('productEdit'));
   
+  const productEdit = JSON.parse(localStorage.getItem('productEdit'));
+
+  const [image, setImage] = useState(productEdit?.image || '');
+  const [imageUrl, setImageUrl] = useState(productEdit?.image || '');
+
+  const [imageUrlReady, setImageUrlReady] = useState(true);
+
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
     name: productEdit?.title,
     description: productEdit?.description,
     price: productEdit?.price,
-   })
-   const [image, setImage] = useState(productEdit?.image);
+  })
+  
 
+  const updateUrlImage = (imageUrl) => {
 
+   setImageUrl(imageUrl);
+
+  };
   const updateImage = (image) => {
+   
     setImage(image);
+    
 
   };
 
-
-  const { startEditingNewProduct} = useStore()
+  const { startEditingNewProduct } = useStore()
 
   const nameForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
   const descriptionForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
@@ -39,24 +49,24 @@ export const EditProduct = () => {
     price: [(value) => !isNaN(value) && Number(value) >= 90, 'Add a number bigger than 90'],
   }
   const { name, description, price, onInputChange, nameValid, descriptionValid, priceValid } = useForm(formData, formValidations);
-  
+
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
-    
+
     e.preventDefault();
     if (nameValid === null && descriptionValid === null && priceValid === null) {
-     
+
       const newProductForm = {
         title: name,
         price: parseInt(price),
-        description: description,        
-        image: productEdit?.image, 
+        description: description,
+        image: imageUrl,
         category: 'Electronic',
-        
-      }         
-      startEditingNewProduct(id,newProductForm, navigate)      
- 
+
+      }
+      startEditingNewProduct(id, newProductForm, navigate)
+
     } else {
       modalError('You must complete the form. Add a word with  two or more letters that starts with upercase. Add a number equal or bigger than 90')
     }
@@ -64,16 +74,16 @@ export const EditProduct = () => {
 
   return (
 
-    <form className='new-product-container'style={{border:'1px solid #e02c1c'}} onSubmit={handleSubmit}>
+    <form className='new-product-container' style={{ border: '1px solid #e02c1c' }} onSubmit={handleSubmit}>
       <div className='items-container'>
         <h1 className='greeting-heading'>Edit Product</h1>
         <div style={{
           width: '100%', height: '30%', display: 'flex',
           flexDirection: 'column', justifyContent: 'center',
         }}>
-          <ProductImage image={image} />
-         
-          <GetImage image={image} updateImage={updateImage} />
+          <ProductImage image={image}  />
+
+          <GetImage  updateImage={updateImage} updateUrlImage={updateUrlImage} setImageUrlReady={setImageUrlReady} />
         </div>
         <Input
           type={'text'}
@@ -83,7 +93,7 @@ export const EditProduct = () => {
           label={'Name'}
           error={''}
           name={'name'}
-          
+
         />
         <Input
           type={'text'}
@@ -106,8 +116,16 @@ export const EditProduct = () => {
         />
 
         <div className='button-container'>
-          <button className='buttonBack' onClick={()=>navigate('/products')}> Back </button>
-          <button type='submit' className='button'> Submit </button>
+          <button className='buttonBack' onClick={() => navigate('/products')}> Back </button>
+          <button 
+          type='submit' 
+          disabled={!imageUrlReady} 
+          className={imageUrlReady?'button':'buttonDisabled'}
+          title={imageUrlReady?'':'The button will be enable when the image is ready'}
+          
+          >
+            {imageUrlReady? 'Submit' : 'Disable'}
+          </button>
         </div>
       </div>
     </form>

@@ -15,7 +15,8 @@ export const TableHeader = () => {
             border: '1px solid #e02c1c',
             borderRadius: '5px',
             cursor: 'pointer',
-            fontSize: '18px'
+            fontSize: '18px',
+            backgroundColor:'white'
           }}
           onClick={() => navigate('/users')}>
           Users

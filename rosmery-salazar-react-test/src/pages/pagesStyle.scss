@@ -49,6 +49,20 @@ h1.greeting-heading{
 
     
 }
+.buttonDisabled{
+    margin:auto;
+    height: 100%;
+    width: 70% ;
+    border-radius: 5px;
+    border-style: none;    
+    background-color: gray ;
+    color: #{$primary};    
+    font-size: 25px;
+    font-weight: bold;
+    cursor: none;
+
+    
+}
 .buttonBack{
     margin:auto;
     height: 100%;
