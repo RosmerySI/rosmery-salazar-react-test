@@ -1,13 +1,21 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useServices } from '../../../hooks/useServices';
 import './products.scss';
 
 export const TableHeader = () => {
   const navigate = useNavigate()
+  const {startLogout} = useServices()
+  const handleLogout = () =>{
+    startLogout()
+  }
   return (
     <div className='title-create-container'>
+      <div style={{display:'flex',flexDirection:'rows'}}>
+        <button onClick={handleLogout} className='button' 
+        style={{height:'40px',marginRight:'5px', fontSize:'16px'}}>Log Out</button>
         <h1>Products</h1>
+        </div>
         <button
           style={{
             height: '50px',
@@ -21,23 +29,7 @@ export const TableHeader = () => {
           onClick={() => navigate('/users')}>
           Users
         </button>
-        <div >
-          <Link to='/products/create'>
-            <Button
-              sx={{
-                background: '#e02c1c',
-                textTransform: 'none',
-                color: 'white',
-                "&:hover": {
-                  border: "1px solid #e02c1c",
-                  color: '#e02c1c',
-                  backgroundColor: 'white'
-                },
-              }}
-            >New Product
-            </Button>
-          </Link>
-        </div>
+       
       </div>
   );
 };

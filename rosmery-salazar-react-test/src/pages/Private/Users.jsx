@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from '../../hooks/useStore';
+import { useServices } from '../../hooks/useServices';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from '../../Components/Atoms/TableItems';
 import { Columns } from '../../utilities/Columns';
@@ -9,7 +9,7 @@ import { DataGrid } from '@mui/x-data-grid';
 export const Users = () => {
 
   const [usersTable ,setUsersTable]= useState([])
-  const { users, startGettingUsers } = useStore()
+  const { users, startGettingUsers } = useServices()
  
  
   const {columnsUsers} = Columns(setUsersTable);
@@ -25,24 +25,22 @@ export const Users = () => {
     }
   }, [users]);
 
-  const handleCellEditCommit = (params) => {
-    
-    const updatedRows = usersTable.map((user) => {
-      if (user.id === params.id) {
-        return { ...user, [params.field]: params.value };
-      }
-     
-      return user;
-    });
-    setUsersTable(updatedRows);
-  };
+  
    
+
   const navigate = useNavigate()
 
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0, 
+    pageSize: 5, 
+  });
+ 
+
   return (
-    <div className='products-container' >
+    <div className='products-container' style={{width:'60%'}} >
         <div className='title-create-container' >
         <h1>Users</h1>
+       
         <button
           style={{
             height: '50px',
@@ -56,16 +54,16 @@ export const Users = () => {
           Back
         </button>
         </div>
-        <Paper style={{ padding: '20px', margin: '20px auto', width: '90%' }}>
-       
+        <h2 style={{color:'gray',margin:'0px'}}>The cells are editables</h2>
+        <Paper style={{ padding: '20px', margin: '20px auto', width: '90%',height:'70%' }}>
         <DataGrid
-          rows={usersTable} 
-          columns={columnsUsers} 
-          pageSize={5} 
-          onCellEditCommit={handleCellEditCommit}
-        />
-      
-      
+        rows={usersTable} 
+        columns={columnsUsers} 
+        pagination 
+        paginationModel={paginationModel} 
+        onPaginationModelChange={setPaginationModel} 
+        pageSizeOptions={[5, 10, 20]} 
+      />
         </Paper>
     </div>
   );

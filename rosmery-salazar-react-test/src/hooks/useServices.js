@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { modalError } from "../utilities/modals";
-import { onLogin } from "../store/authSlice";
+import { onLogin, onLogout } from "../store/authSlice";
 import { onAddingNewProduct, onEditingNewProduct } from "../store/newProductSlice";
 import { createData, editData, readProducts, readUsers} from "../utilities/providers";
 import { onGettingProducts, onGettingUsers } from "../store/productsSlice";
 
 
 
-export const useStore = () => {
+export const useServices = () => {
 
     const { status} = useSelector((state) => state.auth);
     const { newProduct,newProductEdited } = useSelector((state) => state.newProduct);  
@@ -66,10 +66,10 @@ export const useStore = () => {
         localStorage.removeItem('productEdit');
     }
 
-    const startLogout = (setAuth) => {
+    const startLogout = () => {
         dispatch(onLogout());
-        localStorage.clear();
-        setAuth(false)
+        localStorage.clear 
+      
     };
 
     return {

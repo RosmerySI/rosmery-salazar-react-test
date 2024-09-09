@@ -3,7 +3,7 @@ import { Input } from '../../Components/Atoms/InputItem/Input.jsx';
 import { modalError, modalInfo, modalSuccess } from '../../utilities/modals';
 import { ErrorsMessages, SubmitValidation, UpdateValue } from '../../utilities/validations';
 import { useNavigate } from 'react-router-dom';
-import  {useStore}  from '../../hooks/useStore.js'
+import  {useServices}  from '../../hooks/useServices.js'
 import '../pagesStyle.scss';
 
 export const Login = () => {
@@ -21,7 +21,7 @@ export const Login = () => {
         confirmPassword: { value: false, message:'Six to twelve characters containing an uppercase letter, a lowercase letter, a number and a special character' }
     })
 
-    const{startLoginWithEmailPassword} = useStore();
+    const{startLoginWithEmailPassword} = useServices();
 
     useEffect(() => {
         ErrorsMessages(inputList, errorList, setErrorList)
@@ -31,16 +31,19 @@ export const Login = () => {
         e.preventDefault()
 
         if (SubmitValidation(inputList, setInputList)) {
-            inputList.password.value !== inputList.confirmPassword.value
-                ?
+           if( inputList.password.value !== inputList.confirmPassword.value){
+              
                 modalError('Passwords must be the same')
-                :
+               
+            } else{
                 modalSuccess('The data was send')
-            const form = {
-                email: inputList.email.value,
-                password: inputList.password.value
+                const form = {
+                    email: inputList.email.value,
+                    password: inputList.password.value
+                }
+                startLoginWithEmailPassword(form, navigate);
             }
-            startLoginWithEmailPassword(form, navigate);
+            
         } else {
             modalInfo('Enter your email and password')
         }
@@ -48,6 +51,7 @@ export const Login = () => {
     return (
         <form className='login-container' onSubmit={handleLogin} >
             <div className='items-container'>
+              
                 <h1 className='greeting-heading'>Hello</h1>
                 <h2 className='greeting-heading'>Log in to your account</h2>
                 <Input

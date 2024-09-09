@@ -1,18 +1,18 @@
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 import { deleteData,  editData,  readProducts } from './providers';
 import { useNavigate } from 'react-router-dom';
 import { modalCheck, modalError, modalInfo, modalSuccess } from './modals';
-import { useStore } from '../hooks/useStore';
-import { GridCloseIcon } from '@mui/x-data-grid';
+import { useServices } from '../hooks/useServices';
+
 
 
 
 export const Columns = ( setUsersTable) =>{ 
 
-  const {products,users} = useStore()
+  const {products,users} = useServices()
   
   const navigate = useNavigate()
 
@@ -124,18 +124,20 @@ const columnsUsers = [
       return (
         <>
           
-          <IconButton
+          <Button
             color="primary"
             onClick={() => handleEditUser(params.row)}
+            sx={{border:'1px solid blue'}}
           >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            color="primary"
+            Edit
+          </Button>
+          <Button
+            color="error"
             onClick={() => cancelEditUser(params.row,setUsersTable)}
+            sx={{border:'1px solid red', marginLeft:'10px'}}
           >
-            <GridCloseIcon />
-          </IconButton>
+            Cancel
+          </Button>
          
         </>
       );

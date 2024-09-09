@@ -4,7 +4,7 @@ import { useForm } from '../../hooks/useForm';
 import { modalError } from '../../utilities/modals';
 import ProductImage from '../../services/ProductImage/ProductImage';
 import GetImage from '../../services/GetImage/GetImage';
-import { useStore } from '../../hooks/useStore';
+import { useServices } from '../../hooks/useServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../pages/pagesStyle.scss';
 
@@ -38,7 +38,7 @@ export const EditProduct = () => {
 
   };
 
-  const { startEditingNewProduct } = useStore()
+  const { startEditingNewProduct } = useServices()
 
   const nameForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
   const descriptionForm = /^[A-Z][a-zA-Z\s!@#$%^&*()-_+=<>?]{1,}$/;
@@ -46,7 +46,7 @@ export const EditProduct = () => {
   const formValidations = {
     name: [(value) => value.match(nameForm), 'Start with upercase letter and have more than one.'],
     description: [(value) => value.match(descriptionForm), 'Start with upercase letter and have more than one.'],
-    price: [(value) => !isNaN(value) && Number(value) >= 90, 'Add a number bigger than 90'],
+    price: [(value) => !isNaN(value) && Number(value) > 0, 'Add a number bigger than 0'],
   }
   const { name, description, price, onInputChange, nameValid, descriptionValid, priceValid } = useForm(formData, formValidations);
 
@@ -68,7 +68,7 @@ export const EditProduct = () => {
       startEditingNewProduct(id, newProductForm, navigate)
 
     } else {
-      modalError('You must complete the form. Add a word with  two or more letters that starts with upercase. Add a number equal or bigger than 90')
+      modalError('You must complete the form. Add a word with  two or more letters that starts with upercase. Add a number  bigger than 0')
     }
   };
 

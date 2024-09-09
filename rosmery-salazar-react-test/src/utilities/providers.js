@@ -1,4 +1,6 @@
+import { Modal } from "@mui/material";
 import axios from "axios";
+import { modalSuccess } from "./modals";
 
 export const readProducts = async () => {  
     
@@ -43,6 +45,7 @@ export const editData = async (id,form,user) => {
     try {
         const response = await axios.put(url, form);
         console.log(response)
+        modalSuccess('Successful')
         
     } catch (error) {
         console.log(error)
